@@ -5,3 +5,6 @@
 # maven project
 target/
 
+# mac ignore
+.DS_Store
+
