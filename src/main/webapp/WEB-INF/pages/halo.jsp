@@ -11,6 +11,6 @@
     <title>Belajar Spring Web MVC</title>
 </head>
 <body>
-    ${message}
+    ${message} : Halo ${namaLengkap}
 </body>
 </html>
