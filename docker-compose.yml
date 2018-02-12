@@ -1,8 +1,9 @@
 version: '3.5'
 services:
-  websphere :
+  webapp-server :
+    hostname: websphere
     image: websphere-liberty:webProfile6
-    expose:
-      - 9080
+    ports:
+      - "9080:9080"
     volumes:
       - ./target/javaee6-example.war:/config/dropins/SampleJEE6.war
