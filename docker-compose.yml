@@ -7,3 +7,18 @@ services:
       - "9080:9080"
     volumes:
       - ./target/javaee6-example.war:/config/dropins/SampleJEE6.war
+    depends_on:
+      - oracle-db
+  oracle-db :
+    hostname: oradb
+    image: oracle/database:11.2.0.2-xe
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PWD=admin
+    shm_size: '2gb'
+    volumes:
+      - oracledb:/u01/app/oracle/oradata
+      - ./docker-entrypoint.sh:/unlock-hr.sh
+volumes:
+  oracledb:
