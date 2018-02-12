@@ -1,5 +1,6 @@
 package com.maryanto.dimas.example.repository;
 
+import com.maryanto.dimas.example.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,7 +19,7 @@ public class EmployeeRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public String findById(Integer id) {
+    public String lastNameByEmployeeId(Integer id) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("employeeId", id);
         return jdbcTemplate.queryForObject(
@@ -26,6 +27,25 @@ public class EmployeeRepository {
                     @Override
                     public String mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getString("nama_lengkap");
+                    }
+                });
+    }
+
+    public Employee findById(Integer id) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("employeeId", id);
+        return jdbcTemplate.queryForObject(
+                "select * from employees where employee_id = :employeeId",
+                params,
+                new RowMapper<Employee>() {
+                    @Override
+                    public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return new Employee(
+                                resultSet.getInt("employee_id"),
+                                resultSet.getString("first_name"),
+                                resultSet.getString("last_name"),
+                                resultSet.getBigDecimal("salary"),
+                                resultSet.getDouble("commission_pct"));
                     }
                 });
     }

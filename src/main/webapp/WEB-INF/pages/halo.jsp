@@ -11,6 +11,6 @@
     <title>Belajar Spring Web MVC</title>
 </head>
 <body>
-    ${message} : Halo ${namaLengkap}
+Halo ${employee.firstName} ${employee.lastName} salarynya adalah ${employee.salary}
 </body>
 </html>
