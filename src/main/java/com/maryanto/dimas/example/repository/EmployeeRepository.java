@@ -1,0 +1,32 @@
+package com.maryanto.dimas.example.repository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Repository(value = "employeeRepository")
+@Transactional(readOnly = true)
+public class EmployeeRepository {
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public String findById(Integer id) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("employeeId", id);
+        return jdbcTemplate.queryForObject(
+                "select concat(concat(first_name, ' '), last_name) as nama_lengkap from employees where employee_id = :employeeId", params, new RowMapper<String>() {
+                    @Override
+                    public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return resultSet.getString("nama_lengkap");
+                    }
+                });
+    }
+}
