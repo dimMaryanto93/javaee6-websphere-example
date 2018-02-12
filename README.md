@@ -23,3 +23,9 @@ docker-compose up
 ```bash
 docker exec <container-id-oracledb> bash /unlock-hr.sh
 ```
+
+## Cleanup Docker container
+
+```bash
+docker-compose down
+```
