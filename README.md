@@ -2,8 +2,24 @@
 
 Menggunakan java EE 6, deploy into websphere
 
-## Running Websphere via docker
+## Install `oracle/database:11.2.0.2-xe`
 
-`docker run -d -p 80:9080 \
-  -v $(pwd)/target/javaee6-example.war:/config/dropins/SampleJavaEE6.war \
-  websphere-liberty:webProfile6`
+How to install oracle database image [available here](https://github.com/oracle/docker-images/tree/master/OracleDatabase)
+
+## Deloyed war application
+
+```bash
+mvn clean package -Dmaven.skip.test=true
+```
+
+## Run docker-compose
+
+```bash
+docker-compose up
+```
+
+## Grant User `HR@XE`
+
+```bash
+docker exec <container-id-oracledb> bash /unlock-hr.sh
+```
